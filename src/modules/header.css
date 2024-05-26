@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Della+Respira&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #29364f; /* Tailwind class bg-gray-800 */
+  height: 55px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Asegura que el header esté siempre por encima de otros elementos */
+}
+
+.icon_title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 50%;
+  font-family: 'Della Respira', sans-serif;
+}
+
+.logo {
+  margin-left: 40px;
+  height: 48px; /* Tailwind class h-12 */
+  width: 48px;  /* Tailwind class w-12 */
+  border-radius: 50%; /* Tailwind class rounded-full */
+}
+
+.title {
+  color: white;
+  font-size: 2.25rem; /* Tailwind class text-4xl */
+  margin-right: 10rem; /* Adjust to your liking */
+}
+
+.nav {
+  margin-right: 2.5rem; /* Tailwind class mr-10 */
+}
+
+.nav ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0; /* Ensure there is no margin */
+  flex-direction: row; /* Add this line if needed */
+}
+
+.nav-link {
+  color: #a0aec0; /* Tailwind class text-gray-300 */
+  font-size: 0.9rem; /* Tailwind class text-l */
+  font-weight: 500; /* Tailwind class font-medium */
+  margin-left: 0.5rem; /* Tailwind class ml-2 */
+  padding: 0.5rem 0.8rem; /* Tailwind class px-4 py-2 */
+  border-radius: 0.375rem; /* Tailwind class rounded-md */
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  background-color: #4a5568; /* Tailwind class hover:bg-gray-700 */
+  color: white; /* Tailwind class hover:text-white */
+}
+
+.nav-link.current {
+  background-color: #1a202c; /* Tailwind class bg-gray-900 */
+  color: white;
+}

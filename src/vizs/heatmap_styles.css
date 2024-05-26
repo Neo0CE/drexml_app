@@ -1,0 +1,5 @@
+.cell {
+    cursor: pointer;
+    stroke: #ccc; /* Borde de las celdas */
+    stroke-width: 0.2px; /* Ancho del borde */
+}
