@@ -29,36 +29,43 @@ const BarChartCircuit = ({ data, selectedCircuit }) => {
       .domain([-1, 1]) // Assuming the range of values for bars
       .range([height, 0]);
 
-    // Escala de color
+    // Color scale
     const colorScale = d3.scaleSequential(d3.interpolateRdBu)
-      .domain([1, -1]); // Ajusta el dominio según tus datos
+      .domain([1, -1]); // Adjust domain according to your data
 
+    // X Axis
+    svg.append("line")
+    .attr("x1", 0)
+    .attr("y1", y(0))
+    .attr("x2", width)
+    .attr("y2", y(0))
+    .attr("stroke", "white")
+    .attr("stroke-width", 1);
+
+    // Y Axis
     svg.append("g")
-    .attr("transform", `translate(0,${height})`)
-    .call(d3.axisBottom(x))
-    .call(d3.axisBottom(x).tickFormat(''));
+      .call(d3.axisLeft(y))
+      .selectAll("text")
+      .attr("fill", "white");
 
-    svg.append("g")
-    .call(d3.axisLeft(y))
-    .selectAll("text")
-    .attr("fill", "white");
+    // Styling axis lines
+    svg.selectAll(".domain")
+      .attr("stroke", "white");
 
-    svg.selectAll(".domain, .tick line")
-    .attr("stroke", "white");
-
+    // Bars
     svg.selectAll(".bar")
       .data(Object.keys(circuitData).slice(1)) // Exclude "circuit_name"
       .enter().append("rect")
       .attr("class", "bar")
       .attr("x", d => x(d))
       .attr("width", x.bandwidth())
-      .attr("y", d => y(circuitData[d]))
-      .attr("height", d => height - y(circuitData[d]))
-      .attr("fill", d => colorScale(circuitData[d])); // Aplica la escala de color al relleno de las barras
+      .attr("y", d => y(Math.max(0, circuitData[d]))) // Start from y=0 for positive values
+      .attr("height", d => Math.abs(y(circuitData[d]) - y(0))) // Calculate height based on y scale
+      .attr("fill", d => colorScale(circuitData[d])); // Apply color scale to bar fill
 
-      return () => {
-        d3.select(svgRef.current).selectAll("*").remove(); // Limpia en desmontaje
-      };
+    return () => {
+      d3.select(svgRef.current).selectAll("*").remove(); // Clean up on unmount
+    };
 
   }, [data, selectedCircuit]);
 

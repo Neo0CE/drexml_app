@@ -39,15 +39,19 @@ const BarChartGene = ({ data, selectedDrug }) => {
       .padding(0.1);
 
     const y = d3.scaleLinear()
-      .domain([-1,1])
+      .domain([-1, 1])
       .range([height, 0]);
 
-    // Ejes
-    g.append("g")
-      .attr("transform", `translate(0,${height})`)
-      .call(d3.axisBottom(x))
-      .call(d3.axisBottom(x).tickFormat(''));
+    // Eje x sin ticks ni etiquetas
+    g.append("line")
+      .attr("x1", 0)
+      .attr("y1", y(0))
+      .attr("x2", width)
+      .attr("y2", y(0))
+      .attr("stroke", "white")
+      .attr("stroke-width", 1);
 
+    // Eje y
     g.append("g")
       .call(d3.axisLeft(y))
       .selectAll("text")
@@ -64,8 +68,8 @@ const BarChartGene = ({ data, selectedDrug }) => {
       .attr("class", "bar")
       .attr("x", d => x(d.circuit_name))
       .attr("width", x.bandwidth())
-      .attr("y", d => y(d.value))
-      .attr("height", d => height - y(d.value))
+      .attr("y", d => d.value >= 0 ? y(d.value) : y(0))
+      .attr("height", d => Math.abs(y(d.value) - y(0)))
       .attr("fill", d => colorScale(d.value));
 
   }, [data, selectedDrug]);

@@ -100,7 +100,9 @@ const StabilityChart = () => {
       .attr("class", "brush")
       .call(brush);
 
-    d3.tsv("https://raw.githubusercontent.com/Neo0CE/TIA/main/stability_results_symbol.tsv").then(function(data) {
+//
+
+    d3.tsv("https://raw.githubusercontent.com/Neo0CE/TIA/main/Familial%20Melanoma_stability.tsv").then(function(data) {
       const filtData = data.filter(d => d.stability !== '' && d.stability_lower_95ci !== '' && d.stability_upper_95ci !== '').map(d => ({
         name: d.name,
         stability: +d.stability,

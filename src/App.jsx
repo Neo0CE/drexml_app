@@ -5,36 +5,36 @@ import './App.css';
 import Header from './modules/header';
 import Results from './modules/Results';
 import DatasetExample from './modules/DatasetExample';
+import Team from './modules/Team';
 
 const App = () => {
-  const [data, setData] = useState(null);
-  const [selectedDrug, setSelectedDrug] = useState("");
-  const [selectedCircuit, setSelectedCircuit] = useState("");
+  const [dataMap, setDataMap] = useState(null); // Cambiar el nombre a dataMap para evitar confusiones
 
   useEffect(() => {
-    const csvUrl = "https://raw.githubusercontent.com/Neo0CE/TIA/main/absolute_final.csv";
-    d3.csv(csvUrl).then((csvData) => {
-      setData(csvData);
-    }).catch((error) => {
-      console.error("Error loading the CSV data", error);
-    });
+    const diseases = ["Familial Melanoma", "Fanconi Anemia"]; // Lista de enfermedades disponibles
+    const fetchData = async () => {
+      const data = {};
+
+      for (const disease of diseases) {
+        const csvUrl = `https://raw.githubusercontent.com/Neo0CE/TIA/main/${disease}.csv`;
+
+        try {
+          const csvData = await d3.csv(csvUrl);
+          data[disease] = csvData;
+        } catch (error) {
+          console.error(`Error al cargar los datos para ${disease}:`, error);
+        }
+      }
+
+      setDataMap(data);
+    };
+
+    fetchData();
   }, []);
 
-  const handleChange = (event) => {
-    setSelectedDrug(event.target.value);
-  };
-
-  const handleSelectDrug = (drug) => {
-    setSelectedDrug(drug);
-  };
-
-  const handleCircuitChange = (event) => {
-    setSelectedCircuit(event.target.value);
-  };
-
-  const handleSelectCircuit = (circuit) => {
-    setSelectedCircuit(circuit);
-  };
+  if (!dataMap) {
+    return <div>Loading...</div>; // Muestra un mensaje de carga mientras se cargan los datos
+  }
 
   return (
     <Router>
@@ -42,24 +42,9 @@ const App = () => {
         <Header />
         <main className="App-content">
           <Routes>
-            <Route path="/results" element={
-              <Results 
-                data={data} 
-                selectedDrug={selectedDrug} 
-                handleChange={handleChange} 
-                handleSelectDrug={handleSelectDrug}
-                selectedCircuit={selectedCircuit}
-                handleCircuitChange={handleCircuitChange}
-                handleSelectCircuit={handleSelectCircuit}
-              />} 
-            />
-            <Route path="/dataset-example" element={
-              <DatasetExample 
-                data={data} 
-                selectedDrug={selectedDrug} 
-                handleChange={handleChange}
-              />} 
-            />
+            <Route path="/results" element={<Results dataMap={dataMap} />} />
+            <Route path="/dataset-example" element={<DatasetExample dataMap={dataMap} />} />
+            <Route path="/team"  element={<Team />}/>
           </Routes>
         </main>
         <footer className="App-footer">

@@ -14,7 +14,6 @@ const Heatmap = ({ data, onSelectDrug, onSelectCircuit }) => {
     const width = 700 - margin.left - margin.right;
 
     const svg = d3.select(ref.current)
-     
       .attr("height", height + margin.top + margin.bottom)
       .attr("width", width + margin.left + margin.right)
       .append("g")
