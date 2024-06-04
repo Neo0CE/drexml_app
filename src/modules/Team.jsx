@@ -133,22 +133,7 @@ const navigation = [
                 </a>
             </div>
 
-            <div className='eight'>
-                <a href="https://www.facebook.com/khaou.el.33">
-                    <img className="image-people" src="https://scontent-mad2-1.xx.fbcdn.net/v/t39.30808-1/234767840_3125297401035661_2218077601943176531_n.jpg?stp=dst-jpg_p200x200&_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=HQpieGhB2isQ7kNvgHu1t91&_nc_ht=scontent-mad2-1.xx&oh=00_AYACYVOUIT8gOGFY-a8uw-hjxcusg61nMPhuHbLt8Eo7yw&oe=666553EB" 
-                    alt="Khaoula El Mzabri"/>
-                    <div>
-                        <section className='head_name'>
-                        <span>Pussy Lips</span>
-                        <p>Graphic designer</p>
-                    </section>
-
-                    <section>
-                        <span className='team_content'>Master Searcher (still in process)</span>
-                    </section>
-                    </div>
-                </a>
-            </div>
+           
 
            
         
