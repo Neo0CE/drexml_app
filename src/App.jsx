@@ -6,6 +6,7 @@ import Header from './modules/header';
 import Results from './modules/Results';
 import DatasetExample from './modules/DatasetExample';
 import Team from './modules/Team';
+import Home from './modules/Home';
 
 const App = () => {
   const [dataMap, setDataMap] = useState(null); // Cambiar el nombre a dataMap para evitar confusiones
@@ -41,10 +42,12 @@ const App = () => {
       <div className="App">
         <Header />
         <main className="App-content">
+          
           <Routes>
             <Route path="/results" element={<Results dataMap={dataMap} />} />
             <Route path="/dataset-example" element={<DatasetExample dataMap={dataMap} />} />
             <Route path="/team"  element={<Team />}/>
+            <Route path="/home"  element={<Home />}/>
           </Routes>
         </main>
         <footer className="App-footer">

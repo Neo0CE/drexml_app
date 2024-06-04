@@ -1,5 +1,13 @@
 
-.visualization-container {
+  
+  .content {
+    box-sizing: border-box;
+    
+    margin-top: 80px;
+    padding: 10px; /* Ajusta el padding-top según el tamaño de tu encabezado */
+  }
+  
+  .visualization-container {
     display: flex;
     margin-right: 10px;
     justify-content: space-between;
@@ -49,10 +57,6 @@
     
   }
   
-  .App-content {
-    padding-top: 50px; /* Ajusta el padding-top según el tamaño de tu encabezado */
-  }
-  
   .App-footer {
     font-family: 'Della Respira', sans-serif;
     color: white;
@@ -61,6 +65,7 @@
 
   .heatmap-container {
     height: fit-content;
+    margin-left: 15px;
   }
 
   .stability-container {

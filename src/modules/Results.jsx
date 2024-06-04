@@ -21,6 +21,8 @@ const Results = ({ dataMap }) => {
 
   const handleSelectDisease = (event) => {
     setSelectedDisease(event.target.value);
+    setSelectedDrug("")
+    setSelectedCircuit("")
   };
 
   if (!dataMap) {
@@ -44,7 +46,7 @@ const Results = ({ dataMap }) => {
       <div className="visualization-container">
         {data && (
           <>
-            <div className="heatmap-container">
+            <div className="heatmap-container" >
               <Heatmap data={data} onSelectDrug={setSelectedDrug} onSelectCircuit={setSelectedCircuit} />
             </div>
 
@@ -92,7 +94,7 @@ const Results = ({ dataMap }) => {
 
             <div className='stability-container'>
               <h3>Stability Chart</h3>
-              <StabilityChart />
+              <StabilityChart onChange={handleSelectDisease}/>
             </div>
           </>
         )}

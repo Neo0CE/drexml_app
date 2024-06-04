@@ -1,148 +1,98 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { CSVLink } from 'react-csv';
 import './DatasetExample.css'; // Importa el archivo de estilos CSS
 
-const DatasetExample = ({ dataMap }) => {
-  const [selectedDisease, setSelectedDisease] = useState(""); // Estado para almacenar la enfermedad seleccionada
-  const [selectedDrug, setSelectedDrug] = useState(""); // Estado para almacenar el gen seleccionado
-  const [filteredData, setFilteredData] = useState([]); // Estado para almacenar los datos filtrados
-  const [drugs, setDrugs] = useState([]); // Estado para almacenar los genes disponibles
-  const [filteredColumns, setFilteredColumns] = useState(["circuit_name"]); // Estado para almacenar las columnas filtradas inicialmente
+const DatasetExample = ({ data }) => {
+  const [selectedDrug, setSelectedDrug] = useState(""); // Estado para almacenar la droga seleccionada
 
-  // Manejar el cambio de selección de enfermedad
-  const handleSelectDisease = (event) => {
-    const selectedDisease = event.target.value;
-    setSelectedDisease(selectedDisease);
+  if (!data || data.length === 0) {
+    return null; // Si no hay datos, no renderiza nada o muestra un mensaje de carga
+  }
 
-    // Obtén los datos y genes correspondientes a la enfermedad seleccionada
-    const dataset = dataMap[selectedDisease];
-    if (dataset && dataset.length > 0) {
-      const columns = Object.keys(dataset[0]);
-      const initialDrugs = columns.filter(key => key !== "circuit_name");
-
-      setDrugs([initialDrugs]);
-
-      // Actualizar las columnas filtradas con el gen seleccionado
-      const updatedFilteredColumns = selectedDrug ? ["circuit_name", selectedDrug] : ["circuit_name", ...initialDrugs];
-      setFilteredColumns(updatedFilteredColumns);
-
-      // Filtrar los datos según la enfermedad seleccionada y las columnas filtradas
-      const filteredData = dataset.map(row => {
-        const newRow = {};
-        updatedFilteredColumns.forEach(column => {
-          newRow[column] = row[column];
-        });
-        return newRow;
-      });
-
-      setFilteredData(filteredData);
-    } else {
-      // Reiniciar los estados cuando no hay datos válidos para la enfermedad seleccionada
-      setDrugs([]);
-      setFilteredColumns(["circuit_name"]);
-      setFilteredData([]);
-      setSelectedDrug("");
-    }
-  };
-
-  // Manejar el cambio de selección de gen
+  // Obtén las drogas disponibles
+  const drugs = Object.keys(data[0]).filter(key => key !== "circuit_name");
+  const columns = Object.keys(data[0])
+  // Manejar el cambio de selección de droga
   const handleChange = (event) => {
-    const selectedDrug = event.target.value;
-    setSelectedDrug(selectedDrug);
-
-    // Actualizar las columnas filtradas cuando se selecciona un nuevo gen
-    const updatedFilteredColumns = selectedDrug ? ["circuit_name", selectedDrug] : ["circuit_name"];
-    setFilteredColumns(updatedFilteredColumns);
-
-    // Filtrar los datos nuevamente cuando se selecciona un nuevo gen
-    const dataset = dataMap[selectedDisease];
-    if (dataset && dataset.length > 0) {
-      const filteredData = selectedDrug ? dataset.map(row => {
-        const newRow = {};
-        updatedFilteredColumns.forEach(column => {
-          newRow[column] = row[column];
-        });
-        return newRow;
-      }) : dataset; // Mostrar el dataset completo si no hay gen seleccionado
-
-      setFilteredData(filteredData);
-    }
+    setSelectedDrug(event.target.value);
   };
 
-  // Renderizar la tabla utilizando los datos filtrados solo si hay una enfermedad seleccionada y hay datos filtrados disponibles
+  // Filtrar las columnas según la droga seleccionada
+  const filteredColumns = selectedDrug ? ["circuit_name", selectedDrug] : ["circuit_name", ...drugs.slice(0, 9)]; // Limitar a 9 columnas
+  
+  // Obtener los datos filtrados
+  let filteredData = data.map(row => {
+    const newRow = {};
+    filteredColumns.forEach(column => {
+      newRow[column] = row[column];
+    });
+    return newRow;
+  });
+
+  // Limitar a 12 filas
+  //filteredData = filteredData.slice(0, 12);
+
+  // Renderizar la tabla utilizando los datos filtrados
   return (
-    <div className='content'>
-      <div className="disease-selector">
-        <label htmlFor="diseaseSelector">Selecciona una enfermedad:</label>
-        <select id="diseaseSelector" value={selectedDisease} onChange={handleSelectDisease}>
-          <option value="">Selecciona una enfermedad</option>
-          {Object.keys(dataMap).map((disease) => (
-            <option key={disease} value={disease}>{disease}</option>
+    <div className="table-container">
+      
+      <div className='table-header'>
+      <div className="dropdown_container">
+        <label className="dropdown_drug" htmlFor="drugSelector">Selecciona un gen:</label>
+        <select className="dropdown_label" id="drugSelector" value={selectedDrug} onChange={handleChange}>
+          <option value="">No hay gen seleccionado</option>
+          {drugs.map((drug, index) => (
+            <option key={index} value={drug}>{drug}</option>
           ))}
         </select>
       </div>
+      <div className='download-links'>
+        <div className='download-link-one'>
+      <CSVLink 
+        data={data}
+        headers={columns}
+        filename="full_dataset.csv"
+        className="btn btn-primary"
+        target="_blank"
+      >
+        Descargar Dataset Completo
+      </CSVLink>
+      </div>
 
-      {selectedDisease && (
-        <div className="table-container">
-          <div className='table-header'>
-            <div className="dropdown_container">
-              <label className="dropdown_drug" htmlFor="drugSelector">Selecciona un gen:</label>
-              <select className="dropdown_label" id="drugSelector" value={selectedDrug} onChange={handleChange}>
-                <option value="">No hay gen seleccionado</option>
-                {drugs.map((drug, index) => (
-                  <option key={index} value={drug}>{drug}</option>
-                ))}
-              </select>
-            </div>
-            <div className='download-links'>
-              <div className='download-link-one'>
-                <CSVLink
-                  data={dataMap[selectedDisease]}
-                  headers={drugs}
-                  filename={`${selectedDisease}_dataset.csv`}
-                  className="btn btn-primary"
-                  target="_blank"
-                >
-                  Descargar Dataset Completo
-                </CSVLink>
-              </div>
-
-              <div className='download-link-two'>
-                <CSVLink
-                  data={filteredData}
-                  headers={filteredColumns.map(column => ({ label: column, key: column }))}
-                  filename={`${selectedDisease}_dataset_filtered.csv`}
-                  className="btn btn-primary"
-                  target="_blank"
-                >
-                  Descargar selección en formato csv
-                </CSVLink>
-              </div>
-            </div>
-          </div>
-          {/* Tabla */}
-          <table>
-            <thead>
-              <tr>
-                {filteredColumns.map((column, index) => (
-                  <th key={index}>{column}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {filteredData.map((row, rowIndex) => (
-                <tr key={rowIndex}>
-                  {filteredColumns.map((column, colIndex) => (
-                    <td key={colIndex} className={colIndex === 0 ? 'first-column' : ''}>
-                      {row[column]}
-                    </td>
-                  ))}
-                </tr>
+      <div className='download-link-two'>
+      <CSVLink
+        data={filteredData}
+        headers={filteredColumns.map(column => ({ label: column, key: column }))}
+        filename="dataset.csv"
+        className="btn btn-primary"
+        target="_blank"
+      >
+        Descargar selección en formato csv
+      </CSVLink>
+      </div>
+      </div>
+      </div>
+      {/* Tabla */}
+      <table>
+        <thead>
+          <tr>
+            {filteredColumns.map((column, index) => (
+              <th key={index}>{column}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {filteredData.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {filteredColumns.map((column, colIndex) => (
+                <td key={colIndex} className={colIndex === 0 ? 'first-column' : ''}>
+                  {row[column]}
+                </td>
               ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
