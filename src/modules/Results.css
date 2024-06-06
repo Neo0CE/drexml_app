@@ -2,9 +2,9 @@
   
   .content {
     box-sizing: border-box;
-    
+  
     margin-top: 80px;
-    padding: 10px; /* Ajusta el padding-top según el tamaño de tu encabezado */
+    padding: 0px /* Ajusta el padding-top según el tamaño de tu encabezado */
   }
   
   .visualization-container {
@@ -13,9 +13,24 @@
     justify-content: space-between;
   }
   
-  .heatmap-container, .chart-container {
-    flex: 1;
-    padding-top: 10px;
+ 
+
+  .disease-selector {
+    margin-left: 15px;
+    border: 1px solid #959494; 
+    border-bottom: 0px;
+    border-radius: 7px;
+    background-color: #555555;
+    padding: 4px;
+  }
+
+  .chart-container {
+    
+    padding: 5px;
+    border: 1px solid #959494; 
+    border-radius: 7px;
+    background-color: #555555;
+    margin-bottom: 8px;
   }
   
   .barchart-container {
@@ -31,7 +46,8 @@
   }
   
   .heatmap-container {
-    margin-right: 50px; /* Espacio entre heatmap y gráfico */
+    margin-right: 8px; /* Espacio entre heatmap y gráfico */
+    
   }
   
   
@@ -81,3 +97,6 @@
     width: max-content;
   }
   
+  .disease-selector {
+    width: fit-content;
+  }

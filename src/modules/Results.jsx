@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Heatmap from '../vizs/heatmap';
 import BarChartGene from '../vizs/barchart_gene';
 import BarChartCircuit from '../vizs/barchart_circuit';
@@ -10,6 +10,46 @@ const Results = ({ dataMap }) => {
   const [selectedDrug, setSelectedDrug] = useState("");
   const [selectedCircuit, setSelectedCircuit] = useState("");
   const [data, setData] = useState(null);
+  const [fullscreenAllowed, setFullscreenAllowed] = useState(false);
+  const alertShownRef = useRef(false);
+
+  useEffect(() => {
+    const notifyPermission = () => {
+      if (!document.fullscreenElement && !fullscreenAllowed && !alertShownRef.current) {
+        alert("Recomendamos el uso de pantalla completa para ver los resultados. ¿Quieres activarla?");
+        requestFullScreen();
+        setFullscreenAllowed(true);
+        alertShownRef.current = true; // Marcar que se ha mostrado la alerta
+      }
+    };
+
+    const requestFullScreen = () => {
+      const element = document.documentElement; // Obtén el elemento raíz para pantalla completa
+
+      if (element.requestFullscreen) {
+        element.requestFullscreen().catch((err) => {
+          console.error('Error al intentar activar pantalla completa:', err);
+        });
+      } else if (element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen().catch((err) => {
+          console.error('Error al intentar activar pantalla completa:', err);
+        });
+      } else if (element.msRequestFullscreen) {
+        element.msRequestFullscreen().catch((err) => {
+          console.error('Error al intentar activar pantalla completa:', err);
+        });
+      }
+    };
+
+    notifyPermission(); // Llama a la función al cargar el componente
+
+    // Limpiar el estado al desmontar el componente
+    return () => {
+      setFullscreenAllowed(false);
+    };
+  }, [fullscreenAllowed]);
+
+
 
   useEffect(() => {
     if (selectedDisease && dataMap[selectedDisease]) {
@@ -34,7 +74,7 @@ const Results = ({ dataMap }) => {
   return (
     <div className='content'>
       <div className="disease-selector">
-        <label htmlFor="diseaseSelector">Selecciona una enfermedad:</label>
+        <label htmlFor="diseaseSelector" className="dropdown_drug">Enfermedad seleccionada:</label>
         <select id="diseaseSelector" value={selectedDisease} onChange={handleSelectDisease}>
           <option value="">Selecciona una enfermedad</option>
           {diseases.map((disease) => (
@@ -54,7 +94,7 @@ const Results = ({ dataMap }) => {
               <div className="chart-container">
                 <div className='barchart-container'>
                   <div className='dropdown-title'>
-                    <label className="dropdown_drug" htmlFor="drugSelector">Selecciona un gen:</label>
+                    <label className="dropdown_drug" htmlFor="drugSelector">Gen seleccionado:</label>
                     <select className="dropdown_label" id="drugSelector" value={selectedDrug} onChange={(event) => setSelectedDrug(event.target.value)}>
                       <option value="">Ningún gen seleccionado</option>
                       {data.columns.slice(1).map((drug, index) => (
@@ -64,7 +104,7 @@ const Results = ({ dataMap }) => {
                   </div>
                   {selectedDrug && (
                     <div className="chart">
-                      <h3>Gráfico de Barras para {selectedDrug}</h3>
+                      <h3>Gen: {selectedDrug}</h3>
                       <BarChartGene data={data} selectedDrug={selectedDrug} />
                     </div>
                   )}
@@ -74,7 +114,7 @@ const Results = ({ dataMap }) => {
               <div className="chart-container">
                 <div className='barchart-container'>
                   <div className='dropdown-title'>
-                    <label className="dropdown_circuit" htmlFor="circuitSelector">Selecciona un circuito:</label>
+                    <label className="dropdown_circuit" htmlFor="circuitSelector">Circuito seleccionado:</label>
                     <select className="dropdown_label" id="circuitSelector" value={selectedCircuit} onChange={(event) => setSelectedCircuit(event.target.value)}>
                       <option value="">Ningún circuito seleccionado</option>
                       {data.map((d, index) => (
@@ -84,7 +124,7 @@ const Results = ({ dataMap }) => {
                   </div>
                   {selectedCircuit && (
                     <div className="chart">
-                      <h3>Gráfico de Barras para {selectedCircuit}</h3>
+                      <h3>Circuito: {selectedCircuit}</h3>
                       <BarChartCircuit data={data} selectedCircuit={selectedCircuit} />
                     </div>
                   )}

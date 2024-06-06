@@ -50,9 +50,7 @@ const App = () => {
             <Route path="/home"  element={<Home />}/>
           </Routes>
         </main>
-        <footer className="App-footer">
-          <p>© 2024 DRExML</p>
-        </footer>
+        
       </div>
     </Router>
   );

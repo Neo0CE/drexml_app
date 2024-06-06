@@ -2,4 +2,12 @@
     cursor: pointer;
     stroke: #ccc; /* Borde de las celdas */
     stroke-width: 0.2px; /* Ancho del borde */
+    
 }
+
+.svg-heatmap {
+    border: 1px solid #8F8F8F; 
+    border-radius: 7px;
+    background-color: #494949;
+  }
+  
