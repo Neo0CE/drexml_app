@@ -19,8 +19,8 @@ const BarChartGene = ({ data, selectedDrug }) => {
     }
 
     const margin = { top: 20, right: 30, bottom: 30, left: 40 };
-    const width = 450 - margin.left - margin.right;
-    const height = 257.15 - margin.top - margin.bottom;
+    const width = 500 - margin.left - margin.right;
+    const height = 290.5 - margin.top - margin.bottom;
 
     const svg = d3.select(ref.current)
       .attr("width", width + margin.left + margin.right)

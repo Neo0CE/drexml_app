@@ -19,9 +19,9 @@
     margin-left: 15px;
     border: 1px solid #959494; 
     border-bottom: 0px;
-    border-radius: 7px;
     background-color: #555555;
     padding: 4px;
+    
   }
 
   .chart-container {
@@ -58,18 +58,27 @@
     color: white;
   }
   
-  
+  .dropdown_disease {
+    color: white;
+    margin-right: 10px;
+    font-size: 13px;
+    
+  }
   
   .dropdown_drug, .dropdown_circuit {
     color: white;
     margin-right: 10px;
     font-size: 13px;
+    
   }
   
   .dropdown_label {
     text-align: center;
     width:max-content;
-   font-size: 13px;
+    font-size: 13px;
+    height: fit-content;
+    
+
     
   }
   

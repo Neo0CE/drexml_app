@@ -74,8 +74,8 @@ const Results = ({ dataMap }) => {
   return (
     <div className='content'>
       <div className="disease-selector">
-        <label htmlFor="diseaseSelector" className="dropdown_drug">Enfermedad seleccionada:</label>
-        <select id="diseaseSelector" value={selectedDisease} onChange={handleSelectDisease}>
+        <label htmlFor="diseaseSelector" className="dropdown_disease">Enfermedad seleccionada:</label>
+        <select className="dropdown_label" id="diseaseSelector" value={selectedDisease} onChange={handleSelectDisease}>
           <option value="">Selecciona una enfermedad</option>
           {diseases.map((disease) => (
             <option key={disease} value={disease}>{disease}</option>
@@ -104,7 +104,6 @@ const Results = ({ dataMap }) => {
                   </div>
                   {selectedDrug && (
                     <div className="chart">
-                      <h3>Gen: {selectedDrug}</h3>
                       <BarChartGene data={data} selectedDrug={selectedDrug} />
                     </div>
                   )}
@@ -124,7 +123,6 @@ const Results = ({ dataMap }) => {
                   </div>
                   {selectedCircuit && (
                     <div className="chart">
-                      <h3>Circuito: {selectedCircuit}</h3>
                       <BarChartCircuit data={data} selectedCircuit={selectedCircuit} />
                     </div>
                   )}
