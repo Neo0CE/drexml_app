@@ -6,8 +6,9 @@ const navigation = [
   { name: 'Home', href: '/home' },
   { name: 'Results', href: '/results' },
   { name: 'Team', href: '/team' },
-  { name: 'About Us', href: '/about-us' },
+  { name: 'About Me', href: '/about-us' },
   { name: 'Dataset Example', href: '/dataset-example' },
+  { name: 'Collaborate', href: '/collaborate' },
 ];
 
 function classNames(...classes) {

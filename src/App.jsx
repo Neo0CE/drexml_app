@@ -7,9 +7,12 @@ import Results from './modules/Results';
 import DatasetExample from './modules/DatasetExample';
 import Team from './modules/Team';
 import Home from './modules/Home';
+import AboutUs from './modules/AboutUs';
+import Collaborate from './modules/collaborate'
 
 const App = () => {
   const [dataMap, setDataMap] = useState(null); // Cambiar el nombre a dataMap para evitar confusiones
+  const [diseases, setDiseases] = useState([]);
 
   useEffect(() => {
     const diseases = ["Familial Melanoma", "Fanconi Anemia"]; // Lista de enfermedades disponibles
@@ -28,6 +31,7 @@ const App = () => {
       }
 
       setDataMap(data);
+      setDiseases(diseases);
     };
 
     fetchData();
@@ -45,9 +49,12 @@ const App = () => {
           
           <Routes>
             <Route path="/results" element={<Results dataMap={dataMap} />} />
-            <Route path="/dataset-example" element={<DatasetExample dataMap={dataMap} />} />
+            <Route path="/dataset-example" element={<DatasetExample dataMap={dataMap} diseases={diseases} />} />
             <Route path="/team"  element={<Team />}/>
             <Route path="/home"  element={<Home />}/>
+            <Route path="/about-us"  element={<AboutUs />}/>
+            <Route path="/collaborate"  element={<Collaborate />}/>
+            <Route path="*"  element={<Home />}/>
           </Routes>
         </main>
         

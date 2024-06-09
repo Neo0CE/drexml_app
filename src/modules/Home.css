@@ -47,10 +47,27 @@
 
 .home_info {
    padding: 20px;
+   display: flex;
+   flex-direction: column;
+ 
 }
 
 .home_info h1 {
     font-size: 20px;
     margin-bottom: 20px;
-    color: rgb(132, 152, 255);
+    color: rgb(170, 183, 247);
+}
+
+.home_info p {
+    margin-bottom: 30px;
+}
+
+.img-container {
+    display: flex;
+    justify-content: center;
+}
+
+.home_info img {
+    width: 700px;
+   
 }

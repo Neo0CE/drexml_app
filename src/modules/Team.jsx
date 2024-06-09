@@ -14,6 +14,8 @@ const navigation = [
   
     return (
 
+        <div className="team_content">
+            <div className='top-title'><h1>Andalusian Platform for Computational Medicine</h1></div>
         <div className="team_container">
        
             <div className='one'>
@@ -139,7 +141,7 @@ const navigation = [
         
     </div>
     
-
+    </div>
 )}
 
 export default Team

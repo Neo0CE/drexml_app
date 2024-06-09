@@ -18,10 +18,16 @@
   .disease-selector {
     margin-left: 15px;
     border: 1px solid #959494; 
-    border-bottom: 0px;
     background-color: #555555;
     padding: 4px;
-    
+    width: fit-content;
+    border-radius: 7px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+
+  .charts-container {
+    width: 511.333px;
   }
 
   .chart-container {
@@ -31,6 +37,7 @@
     border-radius: 7px;
     background-color: #555555;
     margin-bottom: 8px;
+    
   }
   
   .barchart-container {
@@ -43,11 +50,13 @@
     display: flex;
     flex-direction: row;
     margin-bottom: 5px;
+    align-items: center;
   }
   
   .heatmap-container {
     margin-right: 8px; /* Espacio entre heatmap y gráfico */
-    
+    height: fit-content;
+    margin-left: 15px;
   }
   
   
@@ -63,12 +72,18 @@
     margin-right: 10px;
     font-size: 13px;
     
+    
+  }
+
+  .chart {
+    width: fit-content;
   }
   
   .dropdown_drug, .dropdown_circuit {
     color: white;
     margin-right: 10px;
     font-size: 13px;
+    width: max-content;
     
   }
   
@@ -82,23 +97,19 @@
     
   }
   
-  .App-footer {
-    font-family: 'Della Respira', sans-serif;
-    color: white;
-    top: 100%;
-  }
 
-  .heatmap-container {
-    height: fit-content;
-    margin-left: 15px;
-  }
 
   .stability-container {
 
     display: flex;
-    justify-content: center;
     flex-direction: column;
     align-items: center;
+    padding: 5px;
+    border: 1px solid #959494; 
+    border-radius: 7px;
+    background-color: #555555;
+    margin-left: 8px;
+    height: 665px;
   }
 
   .stability-container h3 {
@@ -106,6 +117,4 @@
     width: max-content;
   }
   
-  .disease-selector {
-    width: fit-content;
-  }
+ 

@@ -11,9 +11,9 @@ const BarChartCircuit = ({ data, selectedCircuit }) => {
     const circuitData = data.find(d => d.circuit_name === selectedCircuit);
     if (!circuitData) return;
 
-    const margin = { top: 20, right: 30, bottom: 30, left: 40 };
-    const width = 500- margin.left - margin.right;
-    const height = 290.5 - margin.top - margin.bottom;
+    const margin = { top: 20, right: 10, bottom: 30, left: 40 };
+    const width = 500 - margin.left - margin.right;
+    const height = 284 - margin.top - margin.bottom;
 
     const svg = d3.select(svgRef.current)
       .attr("width", width + margin.left + margin.right)

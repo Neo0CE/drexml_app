@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+.content-collaborate {
+    margin-top: 75px;
+    padding: 15px;
+    color: white;
+}
+
+.top-sec {
+    margin-bottom: 20px;
+}
+
+.top-sec h1 {
+    font-size: 20px;
+    margin-bottom: 5px;
+    color: rgb(170, 183, 247);
+    font-size: 30px;
+}
+
+.pages {
+    display: flex;
+    flex-direction: row;
+    
+}
+
+.left-page {
+    border: 1px solid #676767;
+    border-radius: 7px;
+    padding: 10px;
+    background-color: #424242;
+    width: 48.5vw;
+    border-right: 0.5px solid #676767;
+
+}
+
+.right-page {
+    border: 1px solid #676767;
+    border-radius: 7px;
+    padding: 10px;
+    background-color: #424242;
+    width: 48.5vw;
+    height: fit-content;
+    border-left: 0.5px solid #676767;
+
+
+}
+
+.sec {
+    padding: 10px;
+    border: 1px solid #959494; 
+    border-radius: 7px;
+    background-color: #5c5c5c;
+    margin-bottom: 10px;
+}
+
+.sec h1 {
+    color: rgb(255, 255, 255);
+    font-size: 25px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.sec h2 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: rgb(255, 255, 255);
+}
+
+.sec .code-box {
+    font-family: "Roboto Mono", monospace;
+    box-sizing: border-box;
+    position: relative; 
+    padding: 15px;
+    border: 1px solid #515151;
+    background-color: #cecece;
+    color: black;
+    font-size: 11px;
+    white-space: nowrap;
+    overflow-x: scroll;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+   
+}
+
+
+
+.sec li  {
+    margin-left: 35px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+.copy-button {
+    box-sizing: border-box;
+    padding-left: 15px;
+    height: fit-content;
+}

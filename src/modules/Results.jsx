@@ -10,15 +10,15 @@ const Results = ({ dataMap }) => {
   const [selectedDrug, setSelectedDrug] = useState("");
   const [selectedCircuit, setSelectedCircuit] = useState("");
   const [data, setData] = useState(null);
-  const [fullscreenAllowed, setFullscreenAllowed] = useState(false);
   const alertShownRef = useRef(false);
 
   useEffect(() => {
     const notifyPermission = () => {
-      if (!document.fullscreenElement && !fullscreenAllowed && !alertShownRef.current) {
-        alert("Recomendamos el uso de pantalla completa para ver los resultados. ¿Quieres activarla?");
-        requestFullScreen();
-        setFullscreenAllowed(true);
+      if (!document.fullscreenElement && !alertShownRef.current) {
+        const userAgreed = window.confirm("Recomendamos el uso de pantalla completa para ver los resultados. ¿Quieres activarla?");
+        if (userAgreed) {
+          requestFullScreen();
+        }
         alertShownRef.current = true; // Marcar que se ha mostrado la alerta
       }
     };
@@ -42,12 +42,7 @@ const Results = ({ dataMap }) => {
     };
 
     notifyPermission(); // Llama a la función al cargar el componente
-
-    // Limpiar el estado al desmontar el componente
-    return () => {
-      setFullscreenAllowed(false);
-    };
-  }, [fullscreenAllowed]);
+  }, []);
 
 
 
@@ -74,9 +69,9 @@ const Results = ({ dataMap }) => {
   return (
     <div className='content'>
       <div className="disease-selector">
-        <label htmlFor="diseaseSelector" className="dropdown_disease">Enfermedad seleccionada:</label>
+        <label htmlFor="diseaseSelector" className="dropdown_disease">Selected disease:</label>
         <select className="dropdown_label" id="diseaseSelector" value={selectedDisease} onChange={handleSelectDisease}>
-          <option value="">Selecciona una enfermedad</option>
+          <option value="">Select a disease</option>
           {diseases.map((disease) => (
             <option key={disease} value={disease}>{disease}</option>
           ))}
@@ -94,9 +89,9 @@ const Results = ({ dataMap }) => {
               <div className="chart-container">
                 <div className='barchart-container'>
                   <div className='dropdown-title'>
-                    <label className="dropdown_drug" htmlFor="drugSelector">Gen seleccionado:</label>
+                    <label className="dropdown_drug" htmlFor="drugSelector">Selected Gene:</label>
                     <select className="dropdown_label" id="drugSelector" value={selectedDrug} onChange={(event) => setSelectedDrug(event.target.value)}>
-                      <option value="">Ningún gen seleccionado</option>
+                      <option value="">No gene selected</option>
                       {data.columns.slice(1).map((drug, index) => (
                         <option key={index} value={drug}>{drug}</option>
                       ))}
@@ -113,9 +108,9 @@ const Results = ({ dataMap }) => {
               <div className="chart-container">
                 <div className='barchart-container'>
                   <div className='dropdown-title'>
-                    <label className="dropdown_circuit" htmlFor="circuitSelector">Circuito seleccionado:</label>
+                    <label className="dropdown_circuit" htmlFor="circuitSelector">Selected Pathway:</label>
                     <select className="dropdown_label" id="circuitSelector" value={selectedCircuit} onChange={(event) => setSelectedCircuit(event.target.value)}>
-                      <option value="">Ningún circuito seleccionado</option>
+                      <option value="">No pathway selected</option>
                       {data.map((d, index) => (
                         <option key={index} value={d.circuit_name}>{d.circuit_name}</option>
                       ))}
