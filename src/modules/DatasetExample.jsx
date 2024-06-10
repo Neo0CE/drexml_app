@@ -48,7 +48,7 @@ const DatasetExample = ({ dataMap, diseases }) => {
       if (selectedGenes.length < 12) { // Límite de selección a 12 genes
         setSelectedGenes(prevGenes => [...prevGenes, gene]);
       } else {
-        alert("Solo se pueden seleccionar hasta 12 genes.");
+        alert("You only can select up to 12 genes!!!");
       }
     }
   };

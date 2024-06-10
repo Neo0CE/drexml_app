@@ -15,7 +15,7 @@ const Results = ({ dataMap }) => {
   useEffect(() => {
     const notifyPermission = () => {
       if (!document.fullscreenElement && !alertShownRef.current) {
-        const userAgreed = window.confirm("Recomendamos el uso de pantalla completa para ver los resultados. ¿Quieres activarla?");
+        const userAgreed = window.confirm("In order to get the best experience full screen is recommended. Do you want to activate It?");
         if (userAgreed) {
           requestFullScreen();
         }
@@ -28,15 +28,15 @@ const Results = ({ dataMap }) => {
 
       if (element.requestFullscreen) {
         element.requestFullscreen().catch((err) => {
-          console.error('Error al intentar activar pantalla completa:', err);
+          console.error('Error ativating full screen:', err);
         });
       } else if (element.webkitRequestFullscreen) {
         element.webkitRequestFullscreen().catch((err) => {
-          console.error('Error al intentar activar pantalla completa:', err);
+          console.error('Error ativating full screen:', err);
         });
       } else if (element.msRequestFullscreen) {
         element.msRequestFullscreen().catch((err) => {
-          console.error('Error al intentar activar pantalla completa:', err);
+          console.error('Error ativating full screen:', err);
         });
       }
     };

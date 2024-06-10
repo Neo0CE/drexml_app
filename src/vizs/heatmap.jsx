@@ -15,8 +15,9 @@ const Heatmap = ({ data, onSelectDrug, onSelectCircuit }) => {
 
     const svg = d3.select(ref.current)
       .attr("height", height + margin.top + margin.bottom)
-      .attr("width", width + margin.left + margin.right)
-      .append("g")
+      .attr("width", width + margin.left + margin.right);
+
+    const g = svg.append("g")
       .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
     tooltipRef.current = d3.select("body")
@@ -52,7 +53,7 @@ const Heatmap = ({ data, onSelectDrug, onSelectCircuit }) => {
       return acc;
     }, []);
 
-    svg.selectAll(".cell")
+    g.selectAll(".cell")
       .data(cellsData)
       .enter().append("rect")
       .attr("x", d => d.col * effectiveGridSizeX)
@@ -69,58 +70,57 @@ const Heatmap = ({ data, onSelectDrug, onSelectCircuit }) => {
       .on("click", handleClick)
       .style("cursor", "pointer");
 
-      function handleMouseOver(event, d) {
-        d3.select(this)
+    function handleMouseOver(event, d) {
+      d3.select(this)
         .raise()
-          .transition()
-          .duration(100)
-          .style("stroke", "#ff00f7")
-          .style("stroke-width", "2px");
-      
-        svg.selectAll(".x-axis text")
-          .filter(text => text === d.key)
-          .transition()
-          .duration(100)
-          .style("fill", "#ff00f7")
-          .style("font-weight", "bold")
-          .style("font-size", "10px")
-      
-        svg.selectAll(".y-axis text")
-          .filter(text => text === d.name)
-          .transition()
-          .duration(100)
-          .style("fill", "#ff00f7")
-          .style("font-weight", "bold")
-          .style("font-size", "10px")
-      
-        tooltipRef.current.html(`Pathway: ${d.name}<br>Drug: ${d.key}<br>Value: ${d.value}`)
-          .style("opacity", 1)
-          .style("left", (event.pageX + 10) + "px")
-          .style("top", (event.pageY - 10) + "px");
-      }
-      
-      function handleMouseMove(event) {
-        tooltipRef.current.style("left", (event.pageX + 10) + "px")
-          .style("top", (event.pageY - 10) + "px");
-      }
-      
-      function handleMouseOut(event, d) {
-        d3.select(this)
-          .transition()
-          .duration(100)
-          .style("stroke", "#474747")
-          .style("stroke-width", "1px");
-      
-        svg.selectAll(".x-axis text, .y-axis text")
-          .transition()
-          .duration(100)
-          .style("fill", "white")
-          .style("font-weight", "normal")
-          .style("font-size", "5px")
-      
-        tooltipRef.current.style("opacity", 0);
-      }
-      
+        .transition()
+        .duration(100)
+        .style("stroke", "#ff00f7")
+        .style("stroke-width", "2px");
+
+      g.selectAll(".x-axis text")
+        .filter(text => text === d.key)
+        .transition()
+        .duration(100)
+        .style("fill", "#ff00f7")
+        .style("font-weight", "bold")
+        .style("font-size", "10px");
+
+      g.selectAll(".y-axis text")
+        .filter(text => text === d.name)
+        .transition()
+        .duration(100)
+        .style("fill", "#ff00f7")
+        .style("font-weight", "bold")
+        .style("font-size", "10px");
+
+      tooltipRef.current.html(`Pathway: ${d.name}<br>Drug: ${d.key}<br>Value: ${d.value}`)
+        .style("opacity", 1)
+        .style("left", (event.pageX + 10) + "px")
+        .style("top", (event.pageY - 10) + "px");
+    }
+
+    function handleMouseMove(event) {
+      tooltipRef.current.style("left", (event.pageX + 10) + "px")
+        .style("top", (event.pageY - 10) + "px");
+    }
+
+    function handleMouseOut(event, d) {
+      d3.select(this)
+        .transition()
+        .duration(100)
+        .style("stroke", "#474747")
+        .style("stroke-width", "1px");
+
+      g.selectAll(".x-axis text, .y-axis text")
+        .transition()
+        .duration(100)
+        .style("fill", "white")
+        .style("font-weight", "normal")
+        .style("font-size", "5px");
+
+      tooltipRef.current.style("opacity", 0);
+    }
 
     function handleClick(event, d) {
       onSelectDrug(d.key); // Actualiza el gráfico de drogas
@@ -132,14 +132,15 @@ const Heatmap = ({ data, onSelectDrug, onSelectCircuit }) => {
       .range([0, width])
       .padding(0.05);
 
-    svg.append("g")
+    const xAxis = g.append("g")
       .attr("class", "x-axis")
       .attr("transform", `translate(0, ${height})`)
-      .call(d3.axisBottom(xScale).tickSize(0))
-      .selectAll(".tick line, .domain")
+      .call(d3.axisBottom(xScale).tickSize(0));
+
+    xAxis.selectAll(".tick line, .domain")
       .remove();
 
-    svg.selectAll(".x-axis text")
+    xAxis.selectAll(".x-axis text")
       .attr("transform", "rotate(-90)")
       .attr("dy", "-0.5em")
       .attr("dx", "-0.5em")
@@ -152,17 +153,35 @@ const Heatmap = ({ data, onSelectDrug, onSelectCircuit }) => {
       .range([0, height])
       .padding(0.05);
 
-    svg.append("g")
+    const yAxis = g.append("g")
       .attr("class", "y-axis")
-      .call(d3.axisLeft(yScale).tickSize(0))
-      .selectAll(".tick line, .domain")
+      .call(d3.axisLeft(yScale).tickSize(0));
+
+    yAxis.selectAll(".tick line, .domain")
       .remove();
 
-    svg.selectAll(".y-axis text")
+    yAxis.selectAll(".y-axis text")
       .style("text-anchor", "end")
       .attr("dx", "-0.1em")
       .style("font-size", "5px")
       .style("color", "white");
+
+    // Zoom functionality
+    const zoom = d3.zoom()
+      .scaleExtent([1, 10])
+      .translateExtent([[0, 0], [width + margin.left + margin.right, height + margin.top + margin.bottom]])
+      .extent([[margin.left, margin.top], [width, height]])
+      .on("zoom", zoomed);
+
+    svg.call(zoom);
+
+    function zoomed(event) {
+      g.attr("transform", event.transform);
+    }
+
+    svg.on("dblclick.zoom", null).on("dblclick", () => {
+      svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity.translate(margin.left, margin.top));
+    });
 
     return () => {
       d3.select(ref.current).selectAll("*").remove();
