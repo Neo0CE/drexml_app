@@ -24,8 +24,8 @@ const App = () => {
       const dataCrossed = {};  // Datos cruzados
   
       for (const disease of diseasesList) {
-        const csvUrl = `https://raw.githubusercontent.com/Neo0CE/TIA/main/${disease}.csv`;
-        const csvUrlCrossed = `https://raw.githubusercontent.com/Neo0CE/TIA/main/${disease}_crossed.csv`;
+        const csvUrl = `https://raw.githubusercontent.com/Neo0CE/drexml_app/master/datasets/${disease}.csv`;
+        const csvUrlCrossed = `https://raw.githubusercontent.com/Neo0CE/drexml_app/master/datasets/${disease}_crossed.csv`;
   
         try {
           const csvData = await d3.csv(csvUrl);
