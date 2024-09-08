@@ -83,7 +83,7 @@ const Heatmap = ({ data, onSelectDrug, onSelectCircuit }) => {
         .transition()
         .duration(100)
         .style("fill", "#ff00f7")
-        .style("font-weight", "bold")
+        
         
 
       g.selectAll(".y-axis text")
@@ -91,7 +91,7 @@ const Heatmap = ({ data, onSelectDrug, onSelectCircuit }) => {
         .transition()
         .duration(100)
         .style("fill", "#ff00f7")
-        .style("font-weight", "bold")
+        
         
       tooltipRef.current.html(`Pathway: ${d.name}<br>Drug: ${d.key}<br>Value: ${d.value}`)
         .style("opacity", 1)
@@ -116,7 +116,7 @@ const Heatmap = ({ data, onSelectDrug, onSelectCircuit }) => {
         .duration(100)
         .style("fill", "white")
         .style("font-weight", "normal")
-        .style("font-size", "5px");
+        
 
       tooltipRef.current.style("opacity", 0);
     }
