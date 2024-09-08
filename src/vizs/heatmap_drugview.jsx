@@ -95,7 +95,7 @@ const Heatmap_drugview = ({ dataCrossed, onSelectDrug, onSelectCircuit }) => {
         .duration(100)
         .style("fill", "#ff00f7")
         .style("font-weight", "bold")
-        .style("font-size", "15px");
+        
   
       g.selectAll(".y-axis text")
         .filter(text => text === d.name)
@@ -103,7 +103,7 @@ const Heatmap_drugview = ({ dataCrossed, onSelectDrug, onSelectCircuit }) => {
         .duration(100)
         .style("fill", "#ff00f7")
         .style("font-weight", "bold")
-        .style("font-size", "15px");
+        
   
       tooltipRef.current.html(`Pathway: ${d.name}<br>Drug: ${d.key}<br>Value: ${d.value}`)
         .style("opacity", 1)

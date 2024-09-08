@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Team.css';
 
-const navigation = [
-    { name: 'Carlos Loucera', href: '/' },
-    { name: 'Results', href: '/results' },
-    { name: 'Team', href: '/team' },
-    { name: 'About Us', href: '/about-us' },
-    { name: 'Dataset Example', href: '/dataset-example' },
-  ];
 
   function Team() {
     
