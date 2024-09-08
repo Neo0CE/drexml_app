@@ -1,2 +1,2 @@
 # DRExM³L App
-This App is entirely made by Javier Gómez Rodríguez for hist TFM.
+This App is entirely made by Javier Gómez Rodríguez for his TFM.
