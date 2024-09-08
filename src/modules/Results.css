@@ -13,7 +13,49 @@
     justify-content: space-between;
   }
   
+  .header-slector {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .view-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 130px;
+    border: 1px solid #959494; 
+    background-color: #555555;
+    border-radius: 7px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    color: white;
+  }
+
+  .viewtext {
+    margin-right: 10px;
+    margin-left: 3px;
+    font-size: 13px;
+  }
  
+  .view-selector {
+    box-sizing: border-box;
+    padding: 3px;
+    border: 1px solid #959494;
+    margin-right: 10px;
+    color: white;
+    font-size: 13px;
+
+  }
+  
+  .view-selector.selected {
+    
+    background-color: #b327ae; /* color de fondo cuando está seleccionado */
+    
+    
+  }
+
+  
 
   .disease-selector {
     margin-left: 15px;

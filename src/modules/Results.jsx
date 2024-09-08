@@ -1,16 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Heatmap from '../vizs/heatmap';
+import Heatmap_drugview from '../vizs/heatmap_drugview';
 import BarChartGene from '../vizs/barchart_gene';
 import BarChartCircuit from '../vizs/barchart_circuit';
 import StabilityChart from '../vizs/stability_chart';
 import './Results.css';
 
-const Results = ({ dataMap }) => {
+const Results = ({ dataMap, dataCrossed }) => {
   const [selectedDisease, setSelectedDisease] = useState("");
   const [selectedDrug, setSelectedDrug] = useState("");
   const [selectedCircuit, setSelectedCircuit] = useState("");
   const [data, setData] = useState(null);
+  const [dataCrossedForDisease, setDataCrossedForDisease] = useState(null);
+  const [view, setView] = useState("");
   const alertShownRef = useRef(false);
+
 
   useEffect(() => {
     const notifyPermission = () => {
@@ -52,12 +56,22 @@ const Results = ({ dataMap }) => {
     } else {
       setData(null);
     }
-  }, [selectedDisease, dataMap]);
+
+    if (selectedDisease && dataCrossed[selectedDisease]) {
+      setDataCrossedForDisease(dataCrossed[selectedDisease]);
+    } else {
+      setDataCrossedForDisease(null);
+    }
+  }, [selectedDisease, dataMap, dataCrossed]);
 
   const handleSelectDisease = (event) => {
     setSelectedDisease(event.target.value);
     setSelectedDrug("")
     setSelectedCircuit("")
+  };
+
+  const handleViewChange = (view) => {
+    setView(view);
   };
 
   if (!dataMap) {
@@ -66,8 +80,13 @@ const Results = ({ dataMap }) => {
 
   const diseases = Object.keys(dataMap);
 
+
   return (
+
+    
     <div className='content'>
+
+      <div className="header-slector">
       <div className="disease-selector">
         <label htmlFor="diseaseSelector" className="dropdown_disease">Selected disease:</label>
         <select className="dropdown_label" id="diseaseSelector" value={selectedDisease} onChange={handleSelectDisease}>
@@ -78,8 +97,29 @@ const Results = ({ dataMap }) => {
         </select>
       </div>
 
+      {selectedDisease && (
+         <div 
+         className="view-buttons">
+          <p className='viewtext'>Selected view:</p>
+         <button
+           className={`view-selector ${view === "droga" ? 'selected' : ''}`}
+           onClick={() => handleViewChange("droga")}
+         >
+           Drug View
+         </button>
+         <button
+           className={`view-selector ${view === "objetivo" ? 'selected' : ''}`}
+           onClick={() => handleViewChange("objetivo")}
+         >
+           Target View
+         </button>
+       </div>
+      )}
+
+</div>
+
       <div className="visualization-container">
-        {data && (
+        {data && view == "objetivo" && (
           <>
             <div className="heatmap-container" >
               <Heatmap data={data} onSelectDrug={setSelectedDrug} onSelectCircuit={setSelectedCircuit} />
@@ -125,12 +165,61 @@ const Results = ({ dataMap }) => {
               </div>
             </div>
 
-            <div className='stability-container'>
-              <h3>Stability Chart</h3>
-              <StabilityChart onChange={handleSelectDisease}/>
-            </div>
+            
+            
           </>
+
+          
         )}
+        {dataCrossed && view == "droga" && (
+          <>
+            <div className="heatmap-container" >
+            <Heatmap_drugview dataCrossed={dataCrossedForDisease} onSelectDrug={setSelectedDrug} onSelectCircuit={setSelectedCircuit} />
+            </div>
+
+            <div className="charts-container">
+              <div className="chart-container">
+                <div className='barchart-container'>
+                  <div className='dropdown-title'>
+                    <label className="dropdown_drug" htmlFor="drugSelector">Selected Drug:</label>
+                    <select className="dropdown_label" id="drugSelector" value={selectedDrug} onChange={(event) => setSelectedDrug(event.target.value)}>
+                      <option value="">No drug selected</option>
+                      {dataCrossedForDisease.columns.slice(1).map((drug, index) => (
+                        <option key={index} value={drug}>{drug}</option>
+                      ))}
+                    </select>
+                  </div>
+                  {selectedDrug && (
+                    <div className="chart">
+                      <BarChartGene data={dataCrossedForDisease} selectedDrug={selectedDrug} />
+                    </div>
+                  )}  
+                </div>
+              </div>
+
+              <div className="chart-container">
+                <div className='barchart-container'>
+                  <div className='dropdown-title'>
+                    <label className="dropdown_circuit" htmlFor="circuitSelector">Selected Pathway:</label>
+                    <select className="dropdown_label" id="circuitSelector" value={selectedCircuit} onChange={(event) => setSelectedCircuit(event.target.value)}>
+                      <option value="">No pathway selected</option>
+                      {dataCrossedForDisease.map((d, index) => (
+                        <option key={index} value={d.circuit_name}>{d.circuit_name}</option>
+                      ))}
+                    </select>
+                  </div>
+                  {selectedCircuit && (
+                    <div className="chart">
+                      <BarChartCircuit data={dataCrossedForDisease} selectedCircuit={selectedCircuit} />
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+            </>
+        )}
+
+        
       </div>
     </div>
   );

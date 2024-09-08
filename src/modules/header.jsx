@@ -34,7 +34,7 @@ function Header() {
           {navigation.map((item) => (
             <li key={item.name}>
               <NavLink
-                exact={item.href === '/home'} // Use exact only for the home link
+           
                 to={item.href}
                 className={classNames(
                   'nav-link',

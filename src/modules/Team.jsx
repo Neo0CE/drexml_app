@@ -15,7 +15,7 @@ const navigation = [
     return (
 
         <div className="team_content">
-            <div className='top-title'><h1>Andalusian Platform for Computational Medicine</h1></div>
+            <div className='top-title'><h1>Andalusian Platform for Computational Medicine Team</h1></div>
         <div className="team_container">
        
             <div className='one'>
@@ -69,7 +69,7 @@ const navigation = [
 
             <div className='four'>
                 <a href="https://www.linkedin.com/in/victor-m-de-la-oliva-roque-797230152/">
-                    <img className="image-people" src="https://media.licdn.com/dms/image/D4D03AQFMblkMrGMjsw/profile-displayphoto-shrink_400_400/0/1701605346435?e=1723075200&v=beta&t=1vhMxf72xYM9kHkYul6anx61Qa-u7BTWj5lHHl_fIvc" 
+                    <img className="image-people" src="https://media.licdn.com/dms/image/v2/D4D03AQFMblkMrGMjsw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1701605346435?e=1730937600&v=beta&t=ge_UiN84jwGOa9p0pIRxA1bm0P5Lg1JQ5bRAqusCdGM" 
                     alt="Víctor Manuel de la Oliva Roque"/>
                     <div>
                         <section className='head_name'>
@@ -78,7 +78,7 @@ const navigation = [
                     </section>
 
                     <section>
-                        <span className='team_content'>Medicina Computacional de Sistemas.</span>
+                        <span className='team_content'>Computational Systems Medicine.</span>
                     </section>
                     </div>
                 </a>
@@ -86,7 +86,7 @@ const navigation = [
 
             <div className='five'>
                 <a href="https://www.linkedin.com/in/sarahrzgl/?originalSubdomain=es">
-                    <img className="image-people" src="https://scontent-mad1-1.xx.fbcdn.net/v/t1.18169-1/20597134_828256464004301_4214403012124704027_n.jpg?stp=dst-jpg_p200x200&_nc_cat=105&ccb=1-7&_nc_sid=5f2048&_nc_ohc=Dd-vGuhol48Q7kNvgE6c8qS&_nc_ht=scontent-mad1-1.xx&oh=00_AYALlte9RULuQjAbo87jvDCsDQOMJRJHQUyXbbhRnmpSrg&oe=6686AA97" 
+                    <img className="image-people" src="https://media.licdn.com/dms/image/v2/D4D03AQGVQesSXH9jXg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1674049345317?e=1730937600&v=beta&t=GtIqmJ8GHce0IfqLMzGXLMOLTxZurRTxkHwu6fPLy1s" 
                     alt="Sara Herráiz-Gil"/>
                     <div>
                         <section className='head_name'>
@@ -103,7 +103,7 @@ const navigation = [
 
             <div className='six'>
                 <a href="https://www.linkedin.com/in/mpena-chilet/?originalSubdomain=es">
-                    <img className="image-people" src="https://media.licdn.com/dms/image/C4D03AQEyKw1H4IbBAw/profile-displayphoto-shrink_800_800/0/1517286760262?e=1723075200&v=beta&t=mkKiRaEY08mzhY5m1NEpiaGsthAMjFsomq4ykWTXasI" 
+                    <img className="image-people" src="https://media.licdn.com/dms/image/v2/C4D03AQEyKw1H4IbBAw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1517286760262?e=1730937600&v=beta&t=4Hny3QzHKGw1HailtT7PvoCe_o0T_55aTP1Jwryseh4" 
                     alt="María Peña-Chilet"/>
                     <div>
                         <section className='head_name'>
@@ -117,15 +117,28 @@ const navigation = [
                     </div>
                 </a>
             </div>
-
-           
-
-           
-
-           
-        
     </div>
     
+            <div className='more_about_us'>
+            <h2>About Us</h2>
+            <p>The Andalusian Platform for Computational Medicine one of the research platforms 
+                of the Fundación Progreso y Salud (FPS), has been conceived as a fundamental piece of 
+                the Personalized Medicine plan of the Andalusian community, with the mission of facilitating 
+                and providing the tools for the inclusion of the genomic data of the patient in the electronical 
+                health record.
+            </p>
+            <p>
+                This Area has the dual aim of developing innovative algorithms and methods for the analysis of genomic data of 
+                patients, combined with the production of high quality software specifically designed to be used by clinician end users, 
+                all this with a strong translational orientation. The ultimate objective of the Area is to bring to the clinician complex 
+                algorithms for the management of complex genomics data in a transparent way for them, which ultimately foster the adoption 
+                of innovative technologies in the current clinical practice.
+            </p>
+            <span>
+            <p>If you want to know more about us you can visit our official web page:</p>
+            <a href="https://www.clinbioinfosspa.es/">https://www.clinbioinfosspa.es/</a>
+            </span>
+            </div>
     </div>
 )}
 

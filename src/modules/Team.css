@@ -3,6 +3,7 @@
 
 .team_content {
     margin-top: 70px;
+    
 }
 
 .top-title {
@@ -19,11 +20,12 @@
 
 .team_container {
     margin-top: 30px;
-    width: 100%;
+    width: 98%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap:  30px;
     margin-left: 20px;
+    
  
     
 }
@@ -110,11 +112,46 @@
 
 .team_container a div section p {
     font-family: 'Roboto', sans-serif;
-    
-    font-size: 10px;
+    color:rgb(191, 241, 236);
+    font-size: 12px;
     
 }
 
 .team_content {
     font-size: 13px;
+}
+
+.more_about_us {
+    box-sizing: border-box;
+    padding-top: 20px;
+    margin-left: 20px;
+    margin-top: 30px;
+    margin-right: 20px;
+    color: white;
+    border-top: 1px solid white;
+}
+
+.more_about_us h2 {
+    font-size: 22px;
+    color:rgb(191, 241, 236);
+    margin-bottom: 15px;
+    text-decoration: underline;
+}
+
+.more_about_us p {
+    margin-bottom: 15px;
+    font-size:13px ;
+}
+
+.more_about_us a {
+    font-size: 15px;
+    margin-left: 40px;
+    text-decoration: underline;
+    color: rgb(133, 255, 131);
+}
+
+.more_about_us span {
+    display: flex;
+    flex-direction: row;
+    
 }

@@ -11,32 +11,44 @@ import AboutUs from './modules/AboutUs';
 import Collaborate from './modules/collaborate'
 
 const App = () => {
-  const [dataMap, setDataMap] = useState(null); // Cambiar el nombre a dataMap para evitar confusiones
+  const [dataMap, setDataMap] = useState(null);
+  const [dataCrossed, setDataMapCrossed] = useState(null); // Cambiar el nombre a dataMap para evitar confusiones
   const [diseases, setDiseases] = useState([]);
 
+
   useEffect(() => {
-    const diseases = ["Familial Melanoma", "Fanconi Anemia"]; // Lista de enfermedades disponibles
+    const diseasesList = ["Familial Melanoma", "Fanconi Anemia"]; // Lista de enfermedades disponibles
+  
     const fetchData = async () => {
-      const data = {};
-
-      for (const disease of diseases) {
+      const data = {};  // Datos principales
+      const dataCrossed = {};  // Datos cruzados
+  
+      for (const disease of diseasesList) {
         const csvUrl = `https://raw.githubusercontent.com/Neo0CE/TIA/main/${disease}.csv`;
-
+        const csvUrlCrossed = `https://raw.githubusercontent.com/Neo0CE/TIA/main/${disease}_crossed.csv`;
+  
         try {
           const csvData = await d3.csv(csvUrl);
           data[disease] = csvData;
+  
+          const csvDataCrossed = await d3.csv(csvUrlCrossed);
+          dataCrossed[disease] = csvDataCrossed;
         } catch (error) {
-          console.error(`Error al cargar los datos para ${disease}:`, error);
+          console.error(`Error al cargar los datos para ${disease}_crossed:`, error);
         }
       }
-
-      setDataMap(data);
-      setDiseases(diseases);
+  
+      setDataMap(data);  // Establece los datos principales
+      setDataMapCrossed(dataCrossed);  // Establece los datos cruzados
+      setDiseases(diseasesList);
     };
-
+  
     fetchData();
   }, []);
 
+ 
+  
+  
   if (!dataMap) {
     return <div>Loading...</div>; // Muestra un mensaje de carga mientras se cargan los datos
   }
@@ -48,7 +60,7 @@ const App = () => {
         <main className="App-content">
           
           <Routes>
-            <Route path="/results" element={<Results dataMap={dataMap} />} />
+            <Route path="/results" element={<Results dataMap={dataMap} dataCrossed={dataCrossed} />} />
             <Route path="/dataset-example" element={<DatasetExample dataMap={dataMap} diseases={diseases} />} />
             <Route path="/team"  element={<Team />}/>
             <Route path="/home"  element={<Home />}/>

@@ -7,6 +7,7 @@
     margin-top: 70px;
     display: flex;
     flex-direction: column;
+    font-family: 'Roboto', sans-serif;
     
     
 }
@@ -49,25 +50,93 @@
    padding: 20px;
    display: flex;
    flex-direction: column;
+   
  
 }
 
 .home_info h1 {
-    font-size: 20px;
-    margin-bottom: 20px;
+    font-size: 30px;
+    margin-bottom: 15px;
     color: rgb(170, 183, 247);
 }
 
-.home_info p {
-    margin-bottom: 30px;
+.description {
+    margin-bottom: 20px;
+}
+
+.explanation {
+    margin-bottom: 10px;
 }
 
 .img-container {
     display: flex;
     justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 37px;
 }
 
 .home_info img {
-    width: 700px;
+    width: 600px;
    
+}
+
+.pointsofview {
+    display: flex;
+    flex-direction: row;
+    
+    margin-top: 5px;
+}
+
+.pointsofview img {
+    margin-left: 0;
+}
+
+.drugviewPO {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.drugviewPO p {
+    margin-bottom: 20px;
+}
+
+.targetviewPO {
+    display: flex;
+    flex-direction: column;
+    
+    margin-left: 20px;
+}
+
+
+.targetviewPO p {
+    margin-bottom: 20px;
+}
+
+.results {
+    margin-top: 25px;
+    color:rgb(191, 241, 236);
+    font-size: 30px;
+    text-align: center;
+}
+.pointsofview h3 {
+    color:rgb(191, 241, 236);
+    font-size: 20px;
+
+}
+
+.example {
+    width: 500px;
+    height: 550px;
+    margin-bottom: 20px;
+}
+
+.results {
+    margin-top: 25px;
+    margin-bottom: 20px;
+}
+
+.dataset_example_home {
+    display: flex;
+    flex-direction: row;
 }

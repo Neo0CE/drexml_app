@@ -1,25 +1,29 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
+import './heatmap_styles.css';
 
-
-const Heatmap = ({ data, onSelectDrug, onSelectCircuit }) => {
+const Heatmap_drugview = ({ dataCrossed, onSelectDrug, onSelectCircuit }) => {
+  console.log("Heatmap_drugview mounted");
   const ref = useRef();
   const tooltipRef = useRef();
 
   useEffect(() => {
-    if (!data) return;
-
-    const margin = { top: 10, bottom: 80, left: 255, right: 10 };
+    if (!dataCrossed || !dataCrossed.length) {
+      console.log("No dataCrossed available", dataCrossed);
+      return;
+    }
+  
+    const margin = { top: 10, bottom: 150, left: 135, right: 10 };
     const height = 665 - margin.top - margin.bottom;
     const width = 739 - margin.left - margin.right;
-
+  
     const svg = d3.select(ref.current)
       .attr("height", height + margin.top + margin.bottom)
       .attr("width", width + margin.left + margin.right);
-
+  
     const g = svg.append("g")
       .attr("transform", `translate(${margin.left}, ${margin.top})`);
-
+  
     tooltipRef.current = d3.select("body")
       .append("div")
       .attr("class", "tooltip")
@@ -30,17 +34,24 @@ const Heatmap = ({ data, onSelectDrug, onSelectCircuit }) => {
       .style("border-radius", "3px")
       .style("padding", "5px")
       .style("opacity", 0);
-
-    const columns = data.columns.slice(1);
-    const circuit_names = data.map(d => d.circuit_name);
-
+  
+    // Extraer columnas y nombres de circuitos
+    const columns = dataCrossed[0] ? Object.keys(dataCrossed[0]).filter(key => key !== 'circuit_name') : [];
+    const circuit_names = dataCrossed.map(d => d.circuit_name);
+  
+    console.log("columns:", columns);
+    console.log("circuit_names:", circuit_names);
+  
     const colorScale = d3.scaleSequential(d3.interpolateRdBu)
       .domain([1, -1]);
-
+  
     const effectiveGridSizeX = width / columns.length;
-    const effectiveGridSizeY = height / data.length;
-
-    const cellsData = data.reduce((acc, d) => {
+    const effectiveGridSizeY = height / dataCrossed.length;
+  
+    console.log("effectiveGridSizeX:", effectiveGridSizeX);
+    console.log("effectiveGridSizeY:", effectiveGridSizeY);
+  
+    const cellsdataCrossed = dataCrossed.reduce((acc, d) => {
       columns.forEach(key => {
         acc.push({
           name: d.circuit_name,
@@ -52,9 +63,9 @@ const Heatmap = ({ data, onSelectDrug, onSelectCircuit }) => {
       });
       return acc;
     }, []);
-
+  
     g.selectAll(".cell")
-      .data(cellsData)
+      .data(cellsdataCrossed)
       .enter().append("rect")
       .attr("x", d => d.col * effectiveGridSizeX)
       .attr("y", d => d.row * effectiveGridSizeY)
@@ -69,7 +80,7 @@ const Heatmap = ({ data, onSelectDrug, onSelectCircuit }) => {
       .on("mouseout", handleMouseOut)
       .on("click", handleClick)
       .style("cursor", "pointer");
-
+  
     function handleMouseOver(event, d) {
       d3.select(this)
         .raise()
@@ -77,69 +88,69 @@ const Heatmap = ({ data, onSelectDrug, onSelectCircuit }) => {
         .duration(100)
         .style("stroke", "#ff00f7")
         .style("stroke-width", "2px");
-
+  
       g.selectAll(".x-axis text")
         .filter(text => text === d.key)
         .transition()
         .duration(100)
         .style("fill", "#ff00f7")
         .style("font-weight", "bold")
-        .style("font-size", "10px");
-
+        .style("font-size", "15px");
+  
       g.selectAll(".y-axis text")
         .filter(text => text === d.name)
         .transition()
         .duration(100)
         .style("fill", "#ff00f7")
         .style("font-weight", "bold")
-        .style("font-size", "10px");
-
+        .style("font-size", "15px");
+  
       tooltipRef.current.html(`Pathway: ${d.name}<br>Drug: ${d.key}<br>Value: ${d.value}`)
         .style("opacity", 1)
         .style("left", (event.pageX + 10) + "px")
         .style("top", (event.pageY - 10) + "px");
     }
-
+  
     function handleMouseMove(event) {
       tooltipRef.current.style("left", (event.pageX + 10) + "px")
         .style("top", (event.pageY - 10) + "px");
     }
-
+  
     function handleMouseOut(event, d) {
       d3.select(this)
         .transition()
         .duration(100)
         .style("stroke", "#474747")
         .style("stroke-width", "1px");
-
+  
       g.selectAll(".x-axis text, .y-axis text")
         .transition()
         .duration(100)
         .style("fill", "white")
         .style("font-weight", "normal")
         .style("font-size", "5px");
-
+  
       tooltipRef.current.style("opacity", 0);
     }
-
+  
     function handleClick(event, d) {
       onSelectDrug(d.key); // Actualiza el gráfico de drogas
       onSelectCircuit(d.name); // Actualiza el gráfico de circuitos
     }
-
+  
     const xScale = d3.scaleBand()
       .domain(columns)
       .range([0, width])
       .padding(0.05);
-
+  
     const xAxis = g.append("g")
       .attr("class", "x-axis")
       .attr("transform", `translate(0, ${height})`)
       .call(d3.axisBottom(xScale).tickSize(0));
-
+  
     xAxis.selectAll(".tick line, .domain")
       .remove();
-
+  
     xAxis.selectAll(".x-axis text")
       .attr("transform", "rotate(-90)")
       .attr("dy", "-0.5em")
@@ -147,49 +158,50 @@ const Heatmap = ({ data, onSelectDrug, onSelectCircuit }) => {
       .style("text-anchor", "end")
       .style("font-size", "5px")
       .style("color", "white");
-
+  
     const yScale = d3.scaleBand()
       .domain(circuit_names)
       .range([0, height])
       .padding(0.05);
-
+  
     const yAxis = g.append("g")
       .attr("class", "y-axis")
       .call(d3.axisLeft(yScale).tickSize(0));
-
+  
     yAxis.selectAll(".tick line, .domain")
       .remove();
-
+  
     yAxis.selectAll(".y-axis text")
       .style("text-anchor", "end")
       .attr("dx", "-0.1em")
       .style("font-size", "5px")
       .style("color", "white");
-
+  
     // Zoom functionality
     const zoom = d3.zoom()
       .scaleExtent([1, 10])
       .translateExtent([[0, 0], [width + margin.left + margin.right, height + margin.top + margin.bottom]])
       .extent([[margin.left, margin.top], [width, height]])
       .on("zoom", zoomed);
-
+  
     svg.call(zoom);
-
+  
     function zoomed(event) {
       g.attr("transform", event.transform);
     }
-
+  
     svg.on("dblclick.zoom", null).on("dblclick", () => {
       svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity.translate(margin.left, margin.top));
     });
-
+  
     return () => {
       d3.select(ref.current).selectAll("*").remove();
       tooltipRef.current.remove();
     };
-  }, [data, onSelectDrug, onSelectCircuit]);
-
+  }, [dataCrossed, onSelectDrug, onSelectCircuit]);
+  
   return <svg ref={ref} className="svg-heatmap"></svg>;
+  
 };
 
-export default Heatmap;
+export default Heatmap_drugview;
